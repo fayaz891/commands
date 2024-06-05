@@ -31,3 +31,53 @@ docker rmi  <image-id>
 | docker top container-id or name 	    | Display the running processes of a container |
 | docker version                 	    | Show the Docker version information |
 
+------------------------------------------------------------------------------------------
+
+
+Docker is a powerful containerization platform, and here are some commonly used Docker commands:
+
+1. **Building Images:**
+   - `docker build -t image_name:tag .`: Build a Docker image from the current directory.
+
+2. **Running Containers:**
+   - `docker run image_name:tag`: Create and start a container based on the specified image.
+   - `docker run -d image_name:tag`: Run a container in detached mode (in the background).
+   - `docker exec -it container_id command`: Run a command inside a running container.
+
+3. **Listing and Managing Containers:**
+   - `docker ps`: List running containers.
+   - `docker ps -a`: List all containers (including stopped ones).
+   - `docker stop container_id`: Stop a running container.
+   - `docker rm container_id`: Remove a stopped container.
+   - `docker rm -f container_id`: Forcefully remove a running container.
+
+4. **Images:**
+   - `docker images`: List available images on your machine.
+   - `docker rmi image_id`: Remove a Docker image.
+   - `docker pull image_name:tag`: Pull an image from a Docker registry.
+
+5. **Networking:**
+   - `docker network ls`: List Docker networks.
+   - `docker network inspect network_name`: Inspect details of a network.
+   - `docker network create network_name`: Create a Docker network.
+
+6. **Volumes:**
+   - `docker volume ls`: List Docker volumes.
+   - `docker volume create volume_name`: Create a Docker volume.
+   - `docker volume inspect volume_name`: Inspect details of a volume.
+
+7. **Logs and Inspecting:**
+   - `docker logs container_id`: View logs of a running container.
+   - `docker inspect container_id`: View detailed information about a container.
+   - `docker inspect image_id`: View detailed information about an image.
+
+8. **Clean-Up:**
+   - `docker system df`: Show Docker disk usage.
+   - `docker system prune`: Remove all stopped containers, unused networks, and dangling images.
+   - `docker system prune -a`: Remove all stopped containers, networks, and images (including unused ones).
+
+9. **Compose (for multi-container applications):**
+   - `docker-compose up`: Start services defined in a `docker-compose.yml` file.
+   - `docker-compose down`: Stop and remove containers, networks, and volumes defined in a `docker-compose.yml` file.
+
+Remember to replace `image_name`, `container_id`, `image_id`, etc., with the actual names or IDs in your setup. Additionally, Docker has many more commands and options. You can explore the [official Docker documentation](https://docs.docker.com/) for more in-depth information and usage examples.
