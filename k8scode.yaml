@@ -1,0 +1,122 @@
+=====>  create EKS cluster  <=====
+
+$ eksctl create cluster --name=eksdemo1 \
+                      --region=us-east-1 \
+                      --zones=us-east-1a,us-east-1b \
+                      --without-nodegroup 
+$ eksctl get cluster
+
+# aws console management need alot of configuration creating oidc-provider, so in CMI we use simple command to create that 
+$ eksctl utils associate-iam-oidc-provider \
+    --region region-code \
+    --cluster <cluter-name> \
+    --approve
+$ eksctl create nodegroup --cluster=eksdemo1 \
+                        --region=us-east-1 \
+                        --name=eksdemo1-ng-public1 \
+                        --node-type=t3.medium \
+                        --nodes=2 \
+                        --nodes-min=2 \
+                        --nodes-max=4 \
+                        --node-volume-size=20 \
+                        --ssh-access \
+                        --ssh-public-key=kube-demo \
+                        --managed \
+                        --asg-access \
+                        --external-dns-access \
+                        --full-ecr-access \
+                        --appmesh-access \
+                        --alb-ingress-access
+
+$ eksctl get nodegroup --cluster=<clusterName>
+$ ssh -i kube-demo.pem ec2-user@<Public-IP-of-Worker-Node>
+$ eksctl delete nodegroup --cluster=<clusterName> --name=<nodegroupName>
+$ eksctl delete cluster <clusterName>
+
+
+kubectl get nodes
+kubectl get nodes -o wide
+
+=====>  Pods  <========
+kubectl run <desired-pod-name> --image <Container-Image>
+kubectl apply -f 02-pod-definition.yml
+kubectl get pods
+kubectl get po
+kubectl get pods -o wide
+kubectl get pod <Pod-Name> -o yaml
+kubectl describe pod <Pod-Name>
+kubectl delete pod <Pod-Name>
+kubectl edit pod <Pod-Name>
+kubectl expose pod my-first-pod  --type=NodePort --port=81 --target-port=81 --name=my-first-service3     #Expose Pod with a Service
+
+=====> Services  <=======
+kubectl get service
+kubectl get svc
+kubectl get service <service-name> -o yaml
+kubectl delete svc <service-name>
+
+=====> MOnitering <===========
+kubectl top pods
+kubectl top pods --sort-by cpu
+kubectl top pods --sort-by memory
+
+=====> Logs  <==========
+kubectl logs <pod-name>
+
+kubectl exec -it <pod-name> -- /bin/bash
+ls
+cd /usr/share/nginx/html
+cat index.html
+exit
+
+
+kubectl get all    #get all object in default namespace
+
+=====>  Raplicaset  <==========
+kubectl create -f replicaset-demo.yml
+kubectl apply -f 03-replicaset-nodeport-servie.yml
+kubectl get replicaset
+kubectl get rs
+kubectl replace -f replicaset-demo.yml
+kubectl describe rs/<replicaset-name>
+kubectl expose rs <ReplicaSet-Name>  --type=NodePort --port=80 --target-port=8080 --name=<Service-Name-To-Be-Created>  #expose rs with a svc
+kubectl delete rs <ReplicaSet-Name>
+
+
+=====> Deployment  <==========
+kubectl create deployment <Deplyment-Name> --image=<Container-Image>
+kubectl apply -f 02-deployment-definition.yml
+kubectl apply -f 01-backend-deployment.yml -f 02-backend-clusterip-service.yml
+kubectl get deployments
+kubectl get deploy
+kubectl get deployment my-first-deployment -o yaml
+kubectl describe deployment <deployment-name>
+kubectl edit deployment/<Deployment-Name>
+kubectl scale --replicas=20 deployment/<Deployment-Name>
+kubectl expose deployment <Deployment-Name>  --type=NodePort --port=80 --target-port=80 --name=<Service-Name-To-Be-Created>
+kubectl delete -f 01-backend-deployment.yml -f 02-backend-clusterip-service.yml
+
+==rolling Update Deployment==
+kubectl set image deployment/<Deployment-Name> <old-Container-Name>=<Container-Image> --record=true
+kubectl rollout status deployment/my-first-deployment
+kubectl rollout history deployment/<Deployment-Name>
+
+====rolling back ====
+kubectl rollout history deployment/my-first-deployment --revision=1
+kubectl rollout history deployment/my-first-deployment --revision=2
+kubectl rollout undo deployment/my-first-deployment --to-revision=3
+kubectl rollout undo deployment/my-first-deployment      #one step back
+kubectl rollout restart deployment/<Deployment-Name>
+
+- If we want to make multiple changes to our Deployment, we can pause the deployment make all changes and resume it. 
+kubectl rollout pause deployment/<Deployment-Name>
+kubectl set image deployment/my-first-deployment kubenginx=stacksimplify/kubenginx:4.0.0
+kubectl rollout history deployment/my-first-deployment
+kubectl set resources deployment/my-first-deployment -c=kubenginx --limits=cpu=20m,memory=30Mi
+kubectl rollout resume deployment/my-first-deployment
+
+
+
+
+
+

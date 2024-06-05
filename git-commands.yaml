@@ -1,0 +1,61 @@
+git branch -a    #list all branch
+git branch
+git branch checkout develop
+git rm abc.yaml xyx.yaml
+git mv abc.yaml xyz.yaml
+git merge sprint1
+git add .
+git status
+git commit -m "my-mesaage"
+git push origin develop
+git pull         #new branches pulled
+
+git switch stage
+nano .gitignore
+---
+*.logs
+---
+
+
+--------------------------------------------
+Git rollback
+
+#first level roolback
+git status
+git diff                   #show difference of files change
+git checkout -f filename1     #undo changes in filename1 before staging
+
+#second level rollback
+git status
+git diff              #if you good then git add .
+git add .
+git status
+git diff --cached        #difference that are staged
+git restore --staged file1   #undo change after staged in file1
+
+#rollback after commited
+git status
+git diff    
+git add .
+git commit -m "mesage"
+git status
+git diff ,git diff --cached # not worked
+git log --online
+git diff previusCommitID..currentCommitID
+
+git revert HEAD          #rollback to prevoius commit,but create new commit
+git revert commitID      #rollback to spacific commit id
+git reset --hard commitID #rollback to that commit but remove above commit history
+git log --oneline
+
+-------------------------------------------
+git status
+
+
+git switch sprint2
+git push --all origin  #push all branches
+git clone https://github.com/imranvisualpath/titanwork.git
+git checkout jupiter1.rb
+git status
+git diff
+

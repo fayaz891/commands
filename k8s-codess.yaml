@@ -1,0 +1,202 @@
+
+kubectl -n kube-system get configmap aws-auth -o yaml
+
+kubectl get pods --all-namespaces | grep Running | wc -l      #check all running pods 
+
+kubectl get node -o yaml | grep pods               #how many pods allocated to node and how much are running
+
+
+#kubectl config get-contexts
+kubectl config use-context kind-kind
+
+# kubectl get nodes
+# kubectl version
+
+# kubectl get nodes
+
+# kubectl get nodes -o wide   # Get Public IP of Worker Nodes
+# kubectl describe nodes
+# kubectl version
+
+kubectl commands
+# kubectl get all
+# kubectl get nodes
+# kubectl get pod
+kubectl edit pod <Pod-Name>
+# kubectl run pods nginx-pod --image=nginx --port=80  --dry-run=client -o yaml   (get yaml minifest of the pod)
+# kubectl get pods -o wide  #pod running on which node
+# kubectl get services
+# kubectl create deployment nginx-depl --image=nginx
+# kubectl get deployment
+# kubectl get replicaset
+# kubectl edit deployment nginx-depl
+Expose Deployment as a Service
+# kubectl expose deployment <Deployment-Name>  --type=NodePort --port=80 --target-port=80 --name=<Service-Name-To-Be-Created>
+# kubectl expose rs <ReplicaSet-Name>  --type=NodePort --port=80 --target-port=8080 --name=<Service-Name-To-Be-Created>
+
+# **NodePort:** Worker Node port | port: service node port | **targetPort:** container port
+
+debugging
+# kubectl logs {pod-name}
+# Stream pod logs with -f option
+#kubectl logs -n <namespace> <pod-name> --since=<timestamp> --until=<timestamp>
+#kubectl logs -n my-namespace my-app-pod --since=2023-09-15T00:00:00Z --until=2023-09-16T00:00:00Z
+
+#duration=$(date -d "2023-09-12" +%s)
+#kubectl logs -n <namespace> <pod-name> --since="${duration}s"
+
+
+
+
+# kubectl exec -it {pod-name} -- /bin/bash        #conect to the container in the pods
+#kubectl exec -it my-first-pod ls
+#kubectl exec -it my-first-pod cat /usr/share/nginx/html/index.html
+#kubectl exec -it my-first-pod -c container2 sh                (connect 2nd container of the pod, if pod has 2 container)
+
+create mongo deployment
+# kubectl create deployment mongo-depl --image=mongo
+# kubectl logs mongo-depl-{pod-name}
+# kubectl describe pod mongo-depl-{pod-name}
+# kubectl scale --replicas=20 deployment/<Deployment-Name>
+
+delete deplyoment
+# kubectl delete deployment mongo-depl
+# kubectl delete deployment nginx-depl
+
+---
+# ********update deploy ***********
+ We can update deployments using two options
+  - Set Image (kubectl set image deployment/<Deployment-Name> <Container-Name>=<Container-Image> --record=true)
+  - Edit Deployment (kubectl edit deployment/<Deployment-Name> --record=true)
+  
+We can rollback a deployment in two ways.
+  - Previous Version
+  - Specific Version
+  
+#By default, rollout happens in a rolling update model in k8s , so no downtime.
+# Verify Rollout Status 
+#kubectl rollout status deployment/my-first-deployment
+
+#We have the rollout history, so we can switch back to older revisions using revision history available to us.  
+# Check the Rollout History of a Deployment
+# kubectl rollout history deployment/<Deployment-Name>
+# kubectl rollout history deployment/my-first-deployment --revision=1
+
+Rollback to previous version
+#kubectl rollout undo deployment/my-first-deployment
+
+ Rolling restarts will kill the existing pods and recreate new pods in a rolling fashion
+ #kubectl rollout restart deployment/<Deployment-Name>
+
+Why do we need Pausing & Resuming Deployments?
+- If we want to make multiple changes to our Deployment, we can pause the deployment make all changes and resume it(no new version)
+#kubectl rollout pause deployment/<Deployment-Name>
+#kubectl rollout resume deployment/my-first-deployment
+
+# Access the Application using Public IP
+# Get Public IP "EXTERNAL-IP" of Worker Nodes
+kubectl get nodes -o wide
+# Application URL
+http://<worker-node-public-ip>:<Node-Port>
+---
+create or edit config file
+# vim nginx-deployment.yaml
+# kubectl apply -f nginx-deployment.yaml
+# kubectl get pod
+# kubectl get deployment
+
+delete with config
+# kubectl delete -f nginx-deployment.yaml
+
+#Metrics
+# kubectl top The kubectl top command returns current CPU and memory usage for a cluster’s pods or nodes, or for a particular pod or node if specified.
+
+More information of pod
+# kubectl get pod -o wide
+
+get information about updated configuration of deployment which stored in etcd
+# kubectl get deployment depl-name -o yaml
+
+save in .yml file then
+# kubectl get deployment depl-name -o yaml > deployment-result.yml
+  kubectl get svc/mysql -n shopdesk-dev -o yaml
+
+
+port forwarded to localhost
+# kubectl port-forward my-deployment-f4b7bbcf-grnfz 8080:80 (loclhst:contnrhst)
+# kubectl port-forward service/my-service 8080:80 -n namespace
+
+get information about everything in k8s
+# kubectl get all
+
+where mongodb are labbeld
+# kubectl get all | grep mongodb
+
+#kubectl get secret db-secret -o yaml -n develop >db-secret.yaml
+
+encode name and passwrd for secretfile
+# echo -n "fayaz" | base64
+
+NAMESPACE
+# kubectl get namespaces
+# kubectl get ns
+# kubectl create namespace my-namespace
+
+# kubectl get configmap -n my-namespace
+# kubectl apply -f mysql-configmap.yaml --namespace=my-namespace
+
+=====> MOnitering <===========
+kubectl top pods
+kubectl top pods --sort-by cpu
+kubectl top pods --sort-by memory
+
+
+
+INGRESS CONTROLLER
+install ingresscontrolr
+# minikube addons enable ingress
+
+# kubectl get ns
+# kubectl get all -n ingress-nginx
+
+# kubectl apply -f dashboard-ingress.yml -n ingress-nginx
+
+# kubectl get ingress -n ingress-nginx
+# kubectl describe ingress dashboard-ingress -n ingress-nginx
+
+details of ingress file
+# kubectl get ingress dashboard-ingress -n ingress-nginx -o yaml
+----------------------------------------------------
+kubectl proxy
+curl 127.0.0.1:8001
+
+# routed to the service
+curl 127.0.0.1:8001/api/v1/namespaces/default/services/web-service/proxy/
+
+kubectl create deploy redis1 --image=redis
+kubectl expose deploy redis1 --port=6379
+kubectl get svc
+
+kubectl port-forward service/redis 1234:6379
+
+curl localhost:1234
+
+
+---------------------------------------------------
+To check the network connectivity between the Kind cluster and the Docker registry, you can try running a simple curl command from within the Kind cluster. For example, you can run the following command:
+bash
+Copy code
+
+#kubectl run -it --rm --image=appropriate/curl curl -- sh
+
+This will start a new pod with curl installed. From within the pod, you can run the following command to check if you can access the Docker registry:
+
+php
+Copy code
+
+#curl http://<docker-registry-url>:<docker-registry-port>
+
+Replace <docker-registry-url> and <docker-registry-port> with the actual URL and port of your Docker registry. If the command succeeds, it means that the Kind cluster can access the Docker registry. If it fails, you may need to check your network configuration or firewall settings.
+-----------------------------------------------------------------------
+
+

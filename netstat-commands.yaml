@@ -1,0 +1,48 @@
+Important Linux Commands
+Install net-tools for the netstat commands(Ubuntu)
+1. print all listening ports
+$ netstat -plunt
+
+2. check if server is listening on port 8080 or not
+$ netstat -plunt | grep 8080
+
+3. list stats of all ports
+$ netstat -s
+
+4. display pid of listening ports
+$ netstat -pt
+
+5. list network interfaces
+$ netstat -i
+
+6. diff, get the differ­ences by comparing files line by line
+$ diff file1.txt file2.txt
+
+7. find the IP from fqdn
+$ nslookup google.com
+
+8. check firewall status
+$ sudo ufw status
+
+9. enable­/di­sable firewall
+$ sudo ufw enable­/disable
+
+10. allow tcp connection
+$ sudo ufw allow 8080/tcp
+
+11. list open files by specific user
+$ lsof -u <us­ern­ame>
+
+12. find processes running on specific port
+$ lsof -i TCP:9090
+
+13. Kill a Process Running on Port
+$ sudo kill -9 $(sudo lsof -t -i:3000)
+
+14. start a dummy listening server on port 8080
+$ netcat -l 8080
+
+15. send data over some port to server
+$ netcat <remote server ip> <po­rt> e.g.
+$ netcat 192.16­8.5­6.120 8080
+(press EOF CNTR+D at end)

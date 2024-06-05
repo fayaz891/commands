@@ -1,0 +1,79 @@
+kubectl get pods --show-lables
+kubectl get pods -l key=value
+kubectl delete pods -l key=value
+kubectl label pods pod-name key=value                 #add lables to the pod
+kubectl label pods pod-name key=value --overwrite     #overwrite lables
+kubectl label pods pod-name key-                     #remove labels
+
+kubectl get pods --selector key=value
+
+kubectl get deployment deploy-name -o wide
+
+kubectl create deployment deploy-name --image=redis --replicas=5 --dry-run=client -o yaml
+
+kubectl rollout status deployment deploy-name
+
+upgrade depluyment
+kubectl set image deployment deploy-name container-namr=redis:6.0 --record
+
+kubectl rollout status deployment/my-first-deployment
+kubectl rollout history deployment/<Deployment-Name>
+kubectl rollout history deployment/my-first-deployment --revision=1
+kubectl rollout undo deployment/my-first-deployment --to-revision=2
+
+kubectl scale deployment deployment-name --replicas=5
+kubectl autoscale deploy deployment-name --min=10 --max=20 --cpu-percent=60
+
+
+=========================
+HELM 
+
+Install Helm from official site
+https://helm.sh/docs/intro/install/
+
+Find, install and publish Cloud Native packages
+https://artifacthub.io/
+
+example of jenkins
+helm repo add jenkins https://charts.jenkins.io
+helm repo update
+helm install my-jenkins jenkins/jenkins
+
+
+uninstall 
+helm uninstall my-jenkins 
+
+======================================
+
+
+monitering
+1) cluter monitering/nodes monitering
+2) pods monitering
+
+buildin tools for monitering
+cAdviser, metrics server, kube-State metrics
+
+check either these tools install or not
+kubectl get pods -n kube-system
+
+kubectl top nodes
+kubectl top pods -A
+kubectl top pods -A --sort-by memory
+
+kubectl top pod pod-name -n namespace --containers     #if pod has multiple containers
+
+kubectl get componentstatus
+-------------------
+
+logging and debugging
+kubectl logs pod-name --since=1m
+kubectl logs pod-name --all-containers=true
+
+kubectl cluster-info 
+kubectl cluster-info dump
+kubectl get componentstatus
+======================================================
+Application env, configuration and security
+
+CRD custom resource definition
+

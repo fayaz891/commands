@@ -1,0 +1,401 @@
+what is terminal
+take input from keyboard, gave to the shell and the shell proccessed and terminal gave output
+
+all linux commands are developed in C lanuguage
+each command is binary file and is exist in spacific location
+we call that file which is called command
+
+fayyaz@fayyaz-HP-ProBook-650-G2:~$  #this is called prompt
+
+whatis pwd
+whatis cd
+whatis ls
+whatis mkdir
+
+$ whatis ln
+$ which ln
+$ man ln
+$ man ls
+$ ln --help
+
+which date   #it show us from where it is executed or where this command file is
+which fdisk 
+
+cat /etc/hostname
+cat /etc/os-release
+
+ip addr show
+
+---
+cat > myfile.yaml <<EOF
+Create a file and add something in automation script
+#cat > file.yaml <<EOF add something EOF
+this is the procedure
+EOF
+
+---
+skill=Devops
+echo $skills
+---
+df -h        #it show partition and mount points (-h human readable) (disk utilization)
+free -m     # memory utilization (RAM utilization)
+lscpu
+
+pwd
+mkdir folder
+cd folder
+ls
+*.txt
+ab*.zip
+abc.*
+touch file1 file2 file3
+touch test{1..100}
+touch .file       #create hidden files
+file abc.piz      #check extention(formate) of file
+sudo -i   #change into root user
+sudo -s
+exit   #again change into normal user
+# absolute path  (when you have / in path it is called absolute path ,without / path is called relative)
+mkdir /home/imran/linux-practices/abc
+cd /etc/samba.smb.conf
+
+# relative path
+mkdir linux-practice/abc
+
+cp file /home/imran/
+cp -rvfp direc/ direc1/
+
+mv direct/ direct1/
+
+
+rm file
+rm -rf direct/
+
+vim file.txt
+#shift+G (goto last line)
+#press i to insert mode    #press Esc after enter data    #press :wq to save or :q!(changes not save)    #Enter
+#press dd to delete full line  (press 3 then press dd ,it delete 3 lines)
+#press yy to copy line and then press p to paste
+#press x to delete single word
+#press u for undo
+#press :%s/abcd/country/g    it replace all abc into country word
+
+#press :X and enter passwd to encrypt your file
+
+nano file.txt
+#press ctrl+x    #press y to save
+
+cat file1.txt
+------------------
+history
+clear
+whoami
+id
+echo "its me fayaz"
+exit
+whoami
+pwd
+cd ~
+ls
+ls -a  #show hidden files too
+ls -l    #details and sort according to alphabates
+ls lh    # with file size
+ls -lt   #sort according to time stamp
+ls -ltr  #reverse timestamp
+ls dev/
+ls /home/vagrant/dev/
+ls >list
+ls >>list
+
+#get short description/information/functionality about command
+whatis pwd
+whatis cd
+whatis ls
+#get details description/information/functionality about command
+man pwd
+man cd
+man ls
+#get flags information of a command
+pwd --help
+cd --help
+
+cat /etc/os-release
+uptime
+cat /proc/uptime
+free -m                 #memory utilization (show phyisal ram(Mem) and virtual memory(swap))
+df -h                  #hardesk partitions
+sudo -i                 #switch to rooot user
+mkdir dev
+mkdir ops bakupdir
+rmdir dev
+mkdir testdir{1..5}
+touch testfile1.txt
+touch devopsfile{1..10}.txt
+
+cp devopsfile1.txt dev/
+cp /home/vagrant/devopsfile2.txt /home/vagrant/dev/
+cp -r dev bakupdir/                                #for directory
+cp --help
+rename abc.piz abc.zip
+mv devopsfile3.txt ops/
+mv testfile1.txt testfile22.txt
+mv *.txt textdir/
+mv ops/ dev/
+rm devopsfile10.txt
+rm -r mobile                    #directory
+rm -rf *
+#  (?) and (*) is called wildcard 
+rm filename?.txt  #it delete multiple files which has name filename i.e filename1 filename2 filename3 filename4 ,it delete all these
+rm *filename.txt
+
+file abc.txt                  #details of file
+file /bin/pwd
+file /bin/yum
+
+------------
+# link command (we make self command to reachout that file on single command)
+mkdir -p /opt/dev/ops/devops/test
+vim /opt/dev/ops/devops/test/commands.txt
+ #enter these commamds to file
+  ls
+  pwd
+  whoami
+  uptime
+
+ln -s /opt/dev/ops/devops/test/commands.txt cmds     #-s means soft link
+ls -l   
+cat cmds
+unlink cmds
+------------
+
+#Filters
+
+ls | grep jo
+grep fayaz xstack.txt    #grep word fayaz in xstak.txt file (case sensitive)
+grep -i fayaz xstak.txt   #without case ssensitive
+grep -i firewall *        # search word firewall in all files
+grep -iR firewall *       # grep from files and inside directories also
+grep -R SELINUX /etc/*
+
+grep -v -i fayaz xstak.txt     # (opposit) donot show line where fayaz word is
+
+less xstak.txt          #its reader not editor like vim,nano . (/word "search word")(down arrow,up arrow) ,:q quit
+more xstak.txt          #its also reader ,use enter to show lines ,q to quite
+
+head xstak.txt
+head -20 sxtak.txt       #show first 20 lines
+
+tail xtak.txt             #opposite of head commnad
+tail -10 xstak.txt
+tail -f xsatk.txt        # it show dynamic content  ,ctrl+c quit
+
+cd /var/log/             #by default server logs on this directory
+tail -f yum.log
+tail -f /var/log/messages         # tail command is very important in trouble shooting
+
+
+#for proper seperater like :
+cat /etc/passwd            #it has all users of system
+cut -d: -f1 /etc/passwd     #-d (delimeter) -f1(field 1)   cut : in row 1 of /etc/passwd files
+cut -d: -f3 /etc/passwd
+
+#if not proper seperater then intelligent filter tool awk
+awk -F':' '{print $1}' /etc/passwd    #-F(cut) , 'enter delimter'
+
+#replace command
+sed 's/fayaz/fayazia/g' samplefile.txt          #search fayaz and replace with fayazia globally in samplefile.txt
+sed -i 's/coronavirus/covid19/g' samplefile.txt  # -i changes occur in file,without -i only print new chnges on screen not actually chnge file
+----------
+
+#input/output redirection
+#output redirection
+uptime >/tmp/sysinfo.txt          #output not print on screen but went to sysinfo.txt file
+ls > /tmp/sysinfo.txt           #over writed
+uptime >> /tmp/sysinfo.txt      #append with existing content
+
+echo "##############" >/tmp/sysinfo.txt
+date >> /tmp/sysinfo.txt
+free -m >> /tmp/sysinfo.txt
+df -h >> /tmp/sysinfo.txt
+echo "###############" >> /tmp/sysinfo.tx
+
+
+#redirect output to somewhere else
+yum install vim -y > /dev/null         #null is file which doesnot contain anything,anything redirect to this will gone,nothing will present
+cat /dev/null > /tmp/sysinfo.txt     #files become empty
+
+freeeee -m 2>> /tmp//error.log       # redirect error to that file (1>> is for sdtandard output and 2>> for standard error)
+
+free -m &>> /tmp//error.log         # for any kind of output
+
+du -sh hypr-auth.yaml   #get size of file/directory
+
+#pipe
+
+wc -l /etc/passwd    #it count number of lines in file
+wc -l < /etc/passwd
+ls | wc -l             #count number of files after ls
+
+ls | grep host
+tail -20 /var/log/messages | grep -i vagrant
+
+free -m | grep Mem
+ls -l | tail
+
+#find
+find /etc -name host*   #(-name fayaz , -name abc etc)
+
+yum install mlocate -y         #for search need to be install
+updatedb
+locate host           #it search host word
+
+
+#users and group ,3 types ,root user(usr-id=0),regular user(usr-id=1000 to 60000) , service users(1 to 999) like ssh,apache etc,
+
+whoami
+cat etc/passwd
+grep vagrant /etc/passwd
+
+cat /etc/group
+grep vagrant /etc/group
+
+id username
+adduser devops
+adduser ansible
+tail -2 /etc/passwd
+id ansible
+
+groupadd devops
+vim /etc/group              #add users in group
+usermod -aG devops ansible  #add users in group through command
+
+passwd ansible             #add password to user
+
+su - ansible               #switch to ansible user
+
+last                  #it shows user login time and other details
+lsof -u vagrant        #it shows all open files of that user
+yum install lsof -y
+
+userdel ansible         #delete user
+userdel -r ansible       #delete along with home directories
+
+groupdel devops       #grp delete
+
+
+
+#File permissions    r = read, w = write, x = execute, - = nill
+-rw-rw-r--  1 hp hp       467 دسمبر  2 18:59  abc.yaml
+
+-         | rw-   | rw-   | r--    | hp     | hp     467        |دسمبر  2 18:59  abc.yaml
+file/dire | users | group | others |usrname |grpname|size in bit|access time| filename
+
+ls -ld /opt/devopsdir                      #check permission of directory
+chown ansible:devops /opt/devopsdir     #change owner of directory (owner is ansible which is in devops group)
+
+chown -R ansible:devops /opt/devopsdir   # change owner along with sub directories
+#symbolic way
+chmod o-x /opt/devopsdir             #others can be executed
+chmod o-r /opt/devopsdir              #others can be read
+chmod g+w /opt/devopsdi               #groups write permissions
+
+$ chmod u+rwx,g+r-x,o+r-x abc.txt            u=user, +=add, rwx
+$ chmod u-rwx abc.txt                   -=remove
+$ chmod g+rwx abc.txt            g=group,
+$ chmod o-rwx abc.txt            o=other
+ 
+$ chmod ugo-rwx abc.txt
+ 
+ 
+ls -l
+#octal way (0-7)
+chmod -R 770 /opt/webdata          # (4) is for read, (2) is for write, (1) is for xecute  4+2+1=7 
+chmod 640 myfile                #(4+2)read&write for usr, (4)only read for groups ,(0)for others no permission
+
+
+#sudo 
+sudo -i            #switch to root user
+su - ansible       #switch to ansible user
+
+ls -l /etc/sudoers
+visudo              #open sudoers file,we can add users having root permissions
+
+#if we are in normal user(ansible) not root and dont hv root pswrd to change anything and we want to change in sudoers file,so instead of sudersfile we change in sudoers.d directory and add your own file
+
+cd /etc/sudoers.d/
+cat vagrant                 #root file
+cp vagrant devops           #root file copy to own file and add according ur need like (%devops  ALL=(ALL)  NOPASSWD:ALL). %means grp,added grp
+
+
+
+
+#software management
+tree /var/log
+curl https://rpmfind.net/linux/centos/... -o package.rpm     #downloaded and -o means save in package.rpm
+apt install tree
+apt search apache2
+yum install httpd
+yum remove httpd
+yum search nginx
+apt install wget -y
+apt upgrade
+apt purge apache2    #remove package with all configurations
+
+
+#services    httpd is for linux,centos etc and apache2 is for ubuntu
+systemctl status <service name>
+systemctl status apache2
+systemctl start apache2
+systemctl status apache2
+systemctl restart apache2
+systemctl reload httpd
+systemctl status httpd
+exit
+systemctl enable httpd
+systemctl is-active httpd
+
+
+#processes
+top                  # show dynamic processes
+ps aux               #similar like top command by not dynamically and quit direct after running command
+ps -ef               # same but doesnot show cpu and memory utilization .it show parent process with thier childs
+ps -ef | grep httpd
+ps -ef | grep httpd | grep -v 'grep'     #grep -v 'grep' =>show all which dont hv word grep
+
+kill 1420                                               #kill <process id>
+kill -9 1476                                            #-9 means forcefully kill
+ps -ef | grep httpd | grep -v 'grep' | awk '{print $2}'
+ps -ef | grep httpd | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+
+
+# Archiev
+c=create, z=compress, v=verbose, f=file ,x=extract
+
+tar -cf myfile.tar /Documents          #zip Documents directory
+tar -czf myfile.tar.gz /Documents
+tar -czvf jenkins.tar.gz jenkins        #tar -czvf <name-of-archive> <folder-which-we-archieving>
+file jenkins.tar.gz
+tar -xvf jenkins.tar.gz
+tar -xzvf jenkins.tar.gz                #to extract files
+tar -xzvf jenkins.tar.gz -C /opt/       #extract somewhere else
+
+#zip much simple as compare to tar command
+yum install zip unzip -y
+zip -r jenkins.zip jenkins
+ls -ltr jenkins*
+unzip jenkins.zip
+
+sudo mount --bind /home/hp/Desktop/Alnafi /home/hp/Documents/Alnafi
+
+----------
+cd /etc/apt/
+cat sources.list            #it contains all urls which are need to download packages using apt command
+
+ufw   =   ubuntu firewall
+
+ufw allow 5432
+---------
+#check port open or not
+telnet 115.42.77.74 5432
+
+
