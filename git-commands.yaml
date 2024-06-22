@@ -58,4 +58,76 @@ git clone https://github.com/imranvisualpath/titanwork.git
 git checkout jupiter1.rb
 git status
 git diff
+--------------------------------------------
+Certainly! Here's a list of some commonly used Git commands along with short descriptions:
 
+1. **git init:**
+   - Initialize a new Git repository in the current directory.
+
+2. **git clone \<repository>:**
+   - Clone a remote repository to your local machine.
+
+3. **git add \<file>:**
+   - Add changes in a specific file to the staging area.
+
+4. **git add . or git add -A:**
+   - Add all changes in the working directory to the staging area.
+
+5. **git commit -m "message":**
+   - Commit the changes in the staging area with a descriptive message.
+
+6. **git status:**
+   - Show the status of changes as untracked, modified, or staged.
+
+7. **git log:**
+   - Display a log of all commits, showing commit messages, authors, dates, and hashes.
+
+8. **git branch:**
+   - List all branches in the repository.
+
+9. **git branch \<branch-name>:**
+   - Create a new branch with the specified name.
+
+10. **git checkout \<branch-name>:**
+    - Switch to the specified branch.
+
+11. **git checkout -b \<branch-name>:**
+    - Create and switch to a new branch in one command.
+
+12. **git merge \<branch>:**
+    - Merge changes from a specified branch into the current branch.
+
+13. **git pull:**
+    - Fetch changes from a remote repository and merge them into the current branch.
+
+14. **git push:**
+    - Push changes to a remote repository.
+
+15. **git remote -v:**
+    - View the remote repositories connected to the current repository.
+
+16. **git remote add \<name> \<url>:**
+    - Add a remote repository with a specified name and URL.
+
+17. **git fetch:**
+    - Fetch changes from a remote repository without merging.
+
+18. **git reset \<file>:**
+    - Unstage changes for a specific file.
+
+19. **git reset --hard HEAD:**
+    - Discard all changes in the working directory and staging area.
+
+20. **git rm \<file>:**
+    - Remove a file from both the working directory and the repository.
+
+21. **git tag \<tag-name>:**
+    - Create a new tag for the current commit.
+
+22. **git diff:**
+    - Show the differences between the working directory and the last commit.
+
+23. **git remote remove \<name>:**
+    - Remove a remote repository connection.
+
+These commands cover some of the fundamental Git operations. Remember to refer to the official Git documentation for more in-depth information and options for each command.
