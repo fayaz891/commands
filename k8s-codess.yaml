@@ -40,6 +40,7 @@ debugging
 # kubectl logs {pod-name}
 # Stream pod logs with -f option
 #kubectl logs -n <namespace> <pod-name> --since=<timestamp> --until=<timestamp>
+kubectl logs --since-time=2024-07-05T00:00:00Z sd-orders-master-dd7bb56c5-f797x -n sd-prod-revamp > order-logs.txt
 #kubectl logs -n my-namespace my-app-pod --since=2023-09-15T00:00:00Z --until=2023-09-16T00:00:00Z
 
 #duration=$(date -d "2023-09-12" +%s)
