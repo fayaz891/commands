@@ -86,8 +86,23 @@ nano file.txt
 #press ctrl+x    #press y to save
 
 cat file1.txt
-------------------
+-----------------------
+
+# By default, history does not show timestamps. You need to enable it by running:
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+
 history
+
+# For Permanent Timestamps
+echo 'export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "' >> ~/.bashrc
+source ~/.bashrc
+
+# Increase the history size (if needed) by adding this to ~/.bashrc:
+echo 'export HISTSIZE=50000' >> ~/.bashrc
+echo 'export HISTFILESIZE=50000' >> ~/.bashrc
+source ~/.bashrc
+
+-------------------
 clear
 whoami
 id
