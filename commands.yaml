@@ -21,6 +21,8 @@ $ ln --help
 which date   #it show us from where it is executed or where this command file is
 which fdisk 
 
+fdisk -l
+
 cat /etc/hostname
 cat /etc/os-release
 
