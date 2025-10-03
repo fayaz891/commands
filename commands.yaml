@@ -25,6 +25,7 @@ fdisk -l
 
 cat /etc/hostname
 cat /etc/os-release
+nano /etc/sudoers   # Sudo privileges:Add user Allow regular users to perform root-level tasks
 
 ip addr show
 
@@ -346,7 +347,7 @@ cp vagrant devops           #root file copy to own file and add according ur nee
 
 
 
-#software management
+#software management #Package managers simplify the installation of software like web servers, database servers
 tree /var/log
 curl https://rpmfind.net/linux/centos/... -o package.rpm     #downloaded and -o means save in package.rpm
 apt install tree
@@ -360,6 +361,7 @@ apt purge apache2    #remove package with all configurations
 
 
 #services    httpd is for linux,centos etc and apache2 is for ubuntu
+service <service_name> start   or   systemctl start <service_name>
 systemctl status <service name>
 systemctl status apache2
 systemctl start apache2
@@ -368,8 +370,17 @@ systemctl restart apache2
 systemctl reload httpd
 systemctl status httpd
 exit
-systemctl enable httpd
+systemctl enable httpd    #start automatically on boot, (disable= viceversa)
 systemctl is-active httpd
+======================================== your own service
+Create a systemd unit file at /etc/systemd/system/<service_name>.service (e.g., my_app.service).
+Define a [Service] section with the ExecStart directive, specifying the command to run the application (e.g., ExecStart=/usr/bin/python /opt/code/my_app.py).
+Reload systemd with systemctl daemon-reload to recognize the new service.
+Start the service: systemctl start my_app.
+Check status: systemctl status my_app (confirms active/running state).
+
+To enable auto-start on boot = Add an [Install] section
+==================================
 
 
 #processes
